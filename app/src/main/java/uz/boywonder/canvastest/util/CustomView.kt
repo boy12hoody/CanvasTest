@@ -17,15 +17,27 @@ class CustomView @JvmOverloads constructor(
 
     private val paint by lazy { Paint(Paint.ANTI_ALIAS_FLAG) }
 
+    init {
+        paint.isAntiAlias = true
+        setupAttributes(attrs)
+    }
+
     var isGenerated = false
         set(state) {
             field = state
             invalidate()
         }
 
-    init {
-        paint.isAntiAlias = true
-        setupAttributes(attrs)
+    companion object {
+        const val RAINING = 0
+        const val FLOODING = 1
+        const val WIND = 2
+    }
+
+    var eventType = RAINING
+    set(value) {
+        field = value
+        invalidate()
     }
 
     private fun setupAttributes(attrs: AttributeSet?) {
@@ -35,7 +47,9 @@ class CustomView @JvmOverloads constructor(
             0, 0
         )
 
-        isGenerated = typedArray.getBoolean(R.styleable.CustomView_isGenerated, false)
+        isGenerated = typedArray.getBoolean(R.styleable.CustomView_is_generated, false)
+        eventType = typedArray.getInt(R.styleable.CustomView_eventType, RAINING)
+
         typedArray.recycle()
     }
 

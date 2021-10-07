@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="CustomView">
-        <attr name="isGenerated" format="boolean"/>
+        <attr name="is_generated" format="boolean"/>
+        <attr name="eventType" format="enum">
+            <enum name="raining" value="0"/>
+            <enum name="flooding" value="1"/>
+            <enum name="wind" value="2"/>
+        </attr>
     </declare-styleable>
 </resources>

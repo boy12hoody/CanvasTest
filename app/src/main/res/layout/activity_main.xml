@@ -61,7 +61,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_marginBottom="10dp"
-                app:isGenerated="false" />
+                app:eventType="raining"
+                app:is_generated="false" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
@@ -106,7 +107,8 @@
                 android:id="@+id/grid_2"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                app:isGenerated="false" />
+                app:eventType="raining"
+                app:is_generated="false" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
