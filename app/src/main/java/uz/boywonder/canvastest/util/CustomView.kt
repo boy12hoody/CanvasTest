@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.View
+import uz.boywonder.canvastest.R
 import kotlin.random.Random
 
 class CustomView @JvmOverloads constructor(
@@ -14,16 +15,48 @@ class CustomView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
 
+    private val paint by lazy { Paint(Paint.ANTI_ALIAS_FLAG) }
+
+    var isGenerated = false
+        set(state) {
+            field = state
+            invalidate()
+        }
+
+    init {
+        paint.isAntiAlias = true
+        setupAttributes(attrs)
+    }
+
+    private fun setupAttributes(attrs: AttributeSet?) {
+
+        val typedArray = context.theme.obtainStyledAttributes(
+            attrs, R.styleable.CustomView,
+            0, 0
+        )
+
+        isGenerated = typedArray.getBoolean(R.styleable.CustomView_isGenerated, false)
+        typedArray.recycle()
+    }
+
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        drawGridForNoReason(canvas)
+        when (isGenerated) {
+            true -> {
+                drawGridForNoReason(canvas)
+            }
+            false -> {
+
+            }
+        }
+
     }
 
     private fun drawGridForNoReason(canvas: Canvas) {
 
-        val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        paint.apply {
             color = Color.BLACK
             style = Paint.Style.FILL
         }

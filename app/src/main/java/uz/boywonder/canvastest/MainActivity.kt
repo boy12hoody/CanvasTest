@@ -14,7 +14,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.apply {
-            grid1
+            generateBtn.setOnClickListener {
+                grid1.isGenerated = true
+                grid2.isGenerated = true
+            }
+
         }
     }
 }
