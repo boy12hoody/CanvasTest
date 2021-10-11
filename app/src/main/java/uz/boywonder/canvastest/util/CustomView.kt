@@ -1,6 +1,5 @@
 package uz.boywonder.canvastest.util
 
-import android.animation.PropertyValuesHolder
 import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.*
@@ -53,8 +52,6 @@ class CustomView @JvmOverloads constructor(
         Log.d("CANVAS", "onSizeChanged called")
 
     }
-
-
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
@@ -185,12 +182,11 @@ class CustomView @JvmOverloads constructor(
             (width / 2).toFloat(),
             height * 0.8f - (currentValue / 5),
             width.toFloat(),
-            height.toFloat() - (currentValue / 5))
+            height.toFloat() - (currentValue / 5)
+        )
 
-        paint.apply {
-            color = Color.GREEN
-            style = Paint.Style.FILL
-        }
+        paint.color = Color.GREEN
+
         canvas.drawPath(path, paint)
 
         canvas.drawRect(
