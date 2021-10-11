@@ -1,8 +1,7 @@
 package uz.boywonder.canvastest
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.chip.Chip
 import uz.boywonder.canvastest.databinding.ActivityMainBinding
 
@@ -17,20 +16,28 @@ class MainActivity : AppCompatActivity() {
 
         binding.apply {
             generateBtn.setOnClickListener {
-                grid1.isGenerated = true
-                grid2.isGenerated = true
+                grid1.drawGrid()
+                grid2.drawGrid()
             }
 
             firstChipGroup.setOnCheckedChangeListener { group, checkedId ->
-                Log.d("CHECKED", checkedId.toString())
 
+                val currentChip = group.findViewById<Chip>(checkedId)
+                currentChip.setOnClickListener {
+                    grid1.eventAction(it.tag.toString().toInt())
+                }
             }
 
             secChipGroup.setOnCheckedChangeListener { group, checkedId ->
-                Log.d("CHECKED", checkedId.toString())
 
+                val currentChip = group.findViewById<Chip>(checkedId)
+                currentChip.setOnClickListener {
+                    grid2.eventAction(it.tag.toString().toInt())
+                }
             }
 
         }
+
+
     }
 }

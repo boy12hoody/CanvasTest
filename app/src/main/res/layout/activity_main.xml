@@ -23,7 +23,7 @@
                 android:orientation="horizontal">
 
                 <com.google.android.material.chip.ChipGroup
-                    android:id="@+id/sec_chipGroup"
+                    android:id="@+id/first_chipGroup"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:checkedChip="@+id/choice_4"
@@ -36,21 +36,24 @@
                         style="@style/Widget.MaterialComponents.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Choice 1" />
+                        android:tag="0"
+                        android:text="Rain!" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/choice_5"
                         style="@style/Widget.MaterialComponents.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Choice 2" />
+                        android:tag="1"
+                        android:text="Fill it!" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/choice_6"
                         style="@style/Widget.MaterialComponents.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Choice 3" />
+                        android:tag="2"
+                        android:text="Western Winds!" />
 
                 </com.google.android.material.chip.ChipGroup>
 
@@ -60,9 +63,7 @@
                 android:id="@+id/grid_1"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:layout_marginBottom="10dp"
-                app:eventType="raining"
-                app:is_generated="false" />
+                android:layout_marginBottom="10dp" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
@@ -70,7 +71,7 @@
                 android:orientation="horizontal">
 
                 <com.google.android.material.chip.ChipGroup
-                    android:id="@+id/first_chipGroup"
+                    android:id="@+id/sec_chipGroup"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:checkedChip="@+id/choice_1"
@@ -83,21 +84,24 @@
                         style="@style/Widget.MaterialComponents.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Choice 1" />
+                        android:tag="0"
+                        android:text="Rain!" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/choice_2"
                         style="@style/Widget.MaterialComponents.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Choice 2" />
+                        android:tag="1"
+                        android:text="Fill it!" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/choice_3"
                         style="@style/Widget.MaterialComponents.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Choice 3" />
+                        android:tag="2"
+                        android:text="Western Winds!" />
 
                 </com.google.android.material.chip.ChipGroup>
 
@@ -106,9 +110,7 @@
             <uz.boywonder.canvastest.util.CustomView
                 android:id="@+id/grid_2"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                app:eventType="raining"
-                app:is_generated="false" />
+                android:layout_height="200dp" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
