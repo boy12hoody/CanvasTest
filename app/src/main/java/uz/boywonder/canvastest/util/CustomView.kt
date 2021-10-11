@@ -1,11 +1,9 @@
 package uz.boywonder.canvastest.util
 
+import android.animation.PropertyValuesHolder
 import android.animation.ValueAnimator
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.RectF
+import android.graphics.*
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
@@ -39,10 +37,7 @@ class CustomView @JvmOverloads constructor(
 
     private val sizeRect = RectF(0f, 0f, 0f, 0f)
 
-    private var startX = 0f
-    private var startY = 0f
-    private var stopX = 0f
-    private var stopY = 0f
+    private var maxCanvasValue = 0
 
     /* Exposed function to draw/generate white-black area */
     fun drawGrid() {
@@ -57,38 +52,23 @@ class CustomView @JvmOverloads constructor(
         sizeRect.set(0f, 0f, w.toFloat(), h.toFloat())
         Log.d("CANVAS", "onSizeChanged called")
 
-        setSizeRect()
     }
 
-    private fun setSizeRect() {
-        startX = 0f
-        startY = sizeRect.height()
-        stopX = sizeRect.width()
-        stopY = sizeRect.height()
-    }
+
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
+        maxCanvasValue = maxOf(width, height)
+
         if (toDrawGrid) {
-            drawGridForNoReason(canvas)
+            drawDefaultGrid(canvas)
         } else {
 
-            Log.d(
-                "CANVAS",
-                "$height / $width / chosenEventType: $chosenEventType"
-            )
-
             when (chosenEventType) {
-                0 -> {
-                    drawRain(canvas)
-                }
-                1 -> {
-                    drawFlood(canvas)
-                }
-                2 -> {
-                    drawWind(canvas)
-                }
+                0 -> eventCirce(canvas)
+                1 -> eventFlood(canvas)
+                2 -> eventSunrise(canvas)
             }
         }
 
@@ -97,35 +77,27 @@ class CustomView @JvmOverloads constructor(
     init {
         setOnClickListener {
             if (hasGenerated) {
-
                 startAnimation()
-
             }
         }
     }
 
     fun eventAction(eventType: Int) {
-
+        animator?.cancel()
         chosenEventType = eventType
-        Log.d(
-            "CANVAS",
-            "$height / $width / eventType: $eventType"
-        )
-
     }
 
-    private fun drawGridForNoReason(canvas: Canvas) {
+    private fun drawDefaultGrid(canvas: Canvas) {
 
         paint.apply {
             color = Color.BLACK
             style = Paint.Style.FILL
         }
 
-        val maxCanvasValue = maxOf(canvas.width, canvas.height)
+
         val grid = maxCanvasValue / 50
 
         rectFloatList.clear()
-        setSizeRect()
 
         for (i in 0..maxCanvasValue step grid) {
 
@@ -153,7 +125,6 @@ class CustomView @JvmOverloads constructor(
             }
         }
 
-        /* */
         toDrawGrid = false
         hasGenerated = true
 
@@ -165,10 +136,11 @@ class CustomView @JvmOverloads constructor(
 
     private fun startAnimation() {
         animator?.cancel()
-        animator = ValueAnimator.ofInt(0, 100).apply {
+        animator = ValueAnimator.ofInt(0, maxCanvasValue).apply {
             duration = animDuration
             interpolator = LinearInterpolator()
             addUpdateListener { valueAnimator ->
+
                 currentValue = valueAnimator.animatedValue as Int
                 Log.d("ANIMATOR", "currentValue: $currentValue")
                 invalidate()
@@ -177,18 +149,61 @@ class CustomView @JvmOverloads constructor(
         animator?.start()
     }
 
-    private fun drawRain(canvas: Canvas) {
+    private fun eventCirce(canvas: Canvas) {
+
+        paint.color = Color.BLACK
+        for (rect in rectFloatList) {
+            canvas.drawRect(rect, paint)
+        }
+
+        paint.apply {
+            color = Color.CYAN
+            style = Paint.Style.FILL
+        }
+
+        canvas.drawCircle(
+            (width / 2).toFloat(),
+            (height / 2).toFloat(),
+            currentValue.toFloat(),
+            paint
+        )
+
 
     }
 
-    private fun drawWind(canvas: Canvas) {
+    private fun eventSunrise(canvas: Canvas) {
 
+        paint.color = Color.BLACK
+        for (rect in rectFloatList) {
+            canvas.drawRect(rect, paint)
+        }
+
+        val path = Path()
+
+        path.moveTo(0f, height.toFloat() - (currentValue / 5))
+        path.quadTo(
+            (width / 2).toFloat(),
+            height * 0.8f - (currentValue / 5),
+            width.toFloat(),
+            height.toFloat() - (currentValue / 5))
+
+        paint.apply {
+            color = Color.GREEN
+            style = Paint.Style.FILL
+        }
+        canvas.drawPath(path, paint)
+
+        canvas.drawRect(
+            0f,
+            (height - (currentValue / 5)).toFloat(),
+            width.toFloat(),
+            height.toFloat(),
+            paint
+        )
     }
 
 
-    private fun drawFlood(canvas: Canvas) {
-
-        Log.d("CANVAS", "drawFlood called")
+    private fun eventFlood(canvas: Canvas) {
 
         paint.color = Color.BLACK
         for (rect in rectFloatList) {
@@ -200,13 +215,14 @@ class CustomView @JvmOverloads constructor(
             style = Paint.Style.FILL
         }
 
-        Log.d("CANVAS", "h: ${sizeRect.height()} / w: ${sizeRect.width()}")
+        canvas.drawRect(
+            0f,
+            (height - currentValue).toFloat(),
+            width.toFloat(),
+            height.toFloat(),
+            paint
+        )
 
-        canvas.drawRect(startX, startY, stopX, stopY, paint)
-
-        startY -= 5
-
-        Log.d("CANVAS", "drawFlood startY: $startY")
 
     }
 

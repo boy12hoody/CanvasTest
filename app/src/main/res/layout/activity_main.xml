@@ -37,7 +37,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:tag="0"
-                        android:text="Rain!" />
+                        android:text="Circle it!" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/choice_5"
@@ -53,7 +53,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:tag="2"
-                        android:text="Western Winds!" />
+                        android:text="Rise and Shine!" />
 
                 </com.google.android.material.chip.ChipGroup>
 
@@ -85,7 +85,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:tag="0"
-                        android:text="Rain!" />
+                        android:text="Circle it!" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/choice_2"
@@ -101,7 +101,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:tag="2"
-                        android:text="Western Winds!" />
+                        android:text="Rise and Shine!" />
 
                 </com.google.android.material.chip.ChipGroup>
 
