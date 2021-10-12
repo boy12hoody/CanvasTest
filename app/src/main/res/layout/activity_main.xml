@@ -143,7 +143,7 @@
                     android:layout_gravity="center"
                     android:stepSize="1"
                     android:valueFrom="1"
-                    android:valueTo="20" />
+                    android:valueTo="30" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
