@@ -47,12 +47,4 @@ dependencies {
     // View binding Delegate
     implementation "com.github.yogacp:android-viewbinding:1.0.3"
 
-    // Coroutines
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2-native-mt'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2-native-mt'
-
-    // Lifecycle
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.4.0-rc01"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0-rc01"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.4.0-rc01"
 }
