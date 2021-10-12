@@ -3,7 +3,6 @@ package uz.boywonder.canvastest
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.chip.Chip
-import com.google.android.material.slider.Slider
 import uz.boywonder.canvastest.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -38,12 +37,34 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-            durationSlider.addOnChangeListener { slider, value, fromUser ->
+            durationSlider.addOnChangeListener { _, value, _ ->
                 grid1.animDuration = (value * 1000).toLong()
                 grid2.animDuration = (value * 1000).toLong()
             }
 
-            durationSlider.isEnabled = false
+            durationSlider.apply {
+                value = (grid1.animDuration / 1000).toFloat()
+                isEnabled = false
+            }
+
+            sizeBtn.setOnClickListener {
+                ResolutionDialog(
+                    this@MainActivity,
+                    grid1.layoutParams.width,
+                    grid1.layoutParams.height
+                ).apply {
+                    setButtonClick { width, height ->
+
+                        grid1.layoutParams.width = width
+                        grid1.layoutParams.height = height
+
+                        grid2.layoutParams.width = width
+                        grid2.layoutParams.height = height
+
+                    }
+                    show()
+                }
+            }
 
         }
 
