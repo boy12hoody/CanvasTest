@@ -6,7 +6,7 @@ import android.graphics.*
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
-import android.view.animation.LinearInterpolator
+import android.view.animation.*
 import kotlin.random.Random
 
 /**
@@ -38,8 +38,12 @@ class CustomView @JvmOverloads constructor(
 
     private var maxCanvasValue = 0
 
+    /* Exposed duration value to be changed */
+    var animDuration = 5000L
+
     /* Exposed function to draw/generate white-black area */
     fun drawGrid() {
+        paint.style = Paint.Style.FILL
         toDrawGrid = true
         animator?.cancel()
         invalidate()
@@ -86,11 +90,7 @@ class CustomView @JvmOverloads constructor(
 
     private fun drawDefaultGrid(canvas: Canvas) {
 
-        paint.apply {
-            color = Color.BLACK
-            style = Paint.Style.FILL
-        }
-
+        paint.color = Color.BLACK
 
         val grid = maxCanvasValue / 50
 
@@ -129,7 +129,6 @@ class CustomView @JvmOverloads constructor(
 
     private var animator: ValueAnimator? = null
     private var currentValue = 0
-    var animDuration = 5000L
 
     private fun startAnimation() {
         animator?.cancel()
@@ -148,15 +147,14 @@ class CustomView @JvmOverloads constructor(
 
     private fun eventCirce(canvas: Canvas) {
 
+        animator?.interpolator = BounceInterpolator()
+
         paint.color = Color.BLACK
         for (rect in rectFloatList) {
             canvas.drawRect(rect, paint)
         }
 
-        paint.apply {
-            color = Color.CYAN
-            style = Paint.Style.FILL
-        }
+        paint.color = Color.RED
 
         canvas.drawCircle(
             (width / 2).toFloat(),
@@ -175,10 +173,38 @@ class CustomView @JvmOverloads constructor(
             canvas.drawRect(rect, paint)
         }
 
-        val path = Path()
+        animator?.interpolator = OvershootInterpolator()
 
-        path.moveTo(0f, height.toFloat() - (currentValue / 5))
-        path.quadTo(
+        /* SKY */
+
+        paint.color = Color.CYAN
+
+        canvas.drawRect(
+            0f,
+            0f,
+            width.toFloat(),
+            currentValue.toFloat(),
+            paint
+        )
+
+        /* SUN */
+
+        paint.color = Color.YELLOW
+
+        canvas.drawCircle(0f, 0f, (currentValue / 5).toFloat(), paint)
+
+        /* SUN ARROWS */
+
+        canvas.drawLine(0f, 0f, (currentValue / 5).toFloat(), (currentValue / 5).toFloat(), paint)
+        canvas.drawLine(0f, 0f, (currentValue / 3).toFloat(), (currentValue / 10).toFloat(), paint)
+        canvas.drawLine(0f, 0f, (currentValue / 10).toFloat(), (currentValue / 4).toFloat(), paint)
+
+        /* GROUND */
+
+        val groundEdgePath = Path()
+
+        groundEdgePath.moveTo(0f, height.toFloat() - (currentValue / 5))
+        groundEdgePath.quadTo(
             (width / 2).toFloat(),
             height * 0.8f - (currentValue / 5),
             width.toFloat(),
@@ -187,7 +213,7 @@ class CustomView @JvmOverloads constructor(
 
         paint.color = Color.GREEN
 
-        canvas.drawPath(path, paint)
+        canvas.drawPath(groundEdgePath, paint)
 
         canvas.drawRect(
             0f,
@@ -196,20 +222,28 @@ class CustomView @JvmOverloads constructor(
             height.toFloat(),
             paint
         )
+
+        /* CLOUD */
+
+        paint.color = Color.WHITE
+
+        canvas.drawCircle(width * 0.75f, height * 0.22f, (currentValue / 20).toFloat(), paint)
+        canvas.drawCircle(width * 0.8f, height * 0.2f, (currentValue / 20).toFloat(), paint)
+        canvas.drawCircle(width * 0.85f, height * 0.22f, (currentValue / 20).toFloat(), paint)
+
     }
 
 
     private fun eventFlood(canvas: Canvas) {
+
+        animator?.interpolator = AccelerateInterpolator()
 
         paint.color = Color.BLACK
         for (rect in rectFloatList) {
             canvas.drawRect(rect, paint)
         }
 
-        paint.apply {
-            color = Color.BLUE
-            style = Paint.Style.FILL
-        }
+        paint.color = Color.BLUE
 
         canvas.drawRect(
             0f,
