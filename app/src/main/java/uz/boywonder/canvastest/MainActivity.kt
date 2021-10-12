@@ -1,6 +1,7 @@
 package uz.boywonder.canvastest
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.chip.Chip
 import uz.boywonder.canvastest.databinding.ActivityMainBinding
@@ -19,6 +20,7 @@ class MainActivity : AppCompatActivity() {
                 grid1.drawGrid()
                 grid2.drawGrid()
                 durationSlider.isEnabled = true
+                instText.visibility = View.GONE
             }
 
             firstChipGroup.setOnCheckedChangeListener { group, checkedId ->
@@ -63,6 +65,11 @@ class MainActivity : AppCompatActivity() {
 
                     }
                     show()
+
+                    instText.apply {
+                        text = "Press Generate Button Again After Resizing"
+                        visibility = View.VISIBLE
+                    }
                 }
             }
 
